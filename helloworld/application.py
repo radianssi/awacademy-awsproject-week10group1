@@ -1,13 +1,15 @@
 #!flask/bin/python
 import json
-from flask import Flask, Response
+from flask import Flask, Response, render_template
 import optparse
 
 application = Flask(__name__)
 
 @application.route('/', methods=['GET'])
-def get():
-    return Response(json.dumps({'Output': 'Hello World'}), mimetype='application/json', status=200)
+# def get():
+#     return Response(json.dumps({'Output': 'Hello World'}), mimetype='application/json', status=200)
+def home_page():
+    return render_template('home.html')
 
 @application.route('/', methods=['POST'])
 def post():
