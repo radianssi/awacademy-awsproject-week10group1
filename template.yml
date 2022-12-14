@@ -98,15 +98,15 @@ Resources:
     Properties:
       TableName: "W10Group1Products"
       AttributeDefinitions:
-        -
-          AttributeName: "ProdPrice"
-          AttributeType: "N"
-        -
-          AttributeName: "ProdStock"
-          AttributeType: "N"
-        -
-          AttributeName: "ProdID"
-          AttributeType: "S"
+        # -
+        #   AttributeName: "ProdPrice"
+        #   AttributeType: "N"
+        # -
+        #   AttributeName: "ProdStock"
+        #   AttributeType: "N"
+        # -
+        #   AttributeName: "ProdID"
+        #   AttributeType: "S"
         -
           AttributeName: "ProdCat"
           AttributeType: "S"
