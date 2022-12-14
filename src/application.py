@@ -2,6 +2,7 @@
 import json
 from flask import Flask, Response, render_template
 import optparse
+import boto3
 
 application = Flask(__name__)
 
@@ -15,6 +16,13 @@ application = Flask(__name__)
 #     def __repr__(self):
 #         return f'Item {self.name}'
 
+def get_products_from_dynamodb():
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('w10group1products-test')
+    data = table.scan()
+    items = data['Items']
+    return items
+
 
 @application.route('/')
 @application.route('/home')
@@ -23,8 +31,8 @@ def home_page():
 
 @application.route('/market')
 def market_page():
-    # items = Item.query.all()
-    return render_template('market.html')#, items=items)
+    items = get_products_from_dynamodb()
+    return render_template('market.html', items=items)
 
 
 if __name__ == '__main__':
