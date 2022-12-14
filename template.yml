@@ -77,7 +77,8 @@ Resources:
       OptionSettings:
       - Namespace: aws:autoscaling:launchconfiguration
         OptionName: IamInstanceProfile
-        Value: !Ref 'EBInstanceProfile'
+        Value: !Ref EC2InstanceProfile
+        # Value: !Ref 'EBInstanceProfile'
       - Namespace: aws:autoscaling:launchconfiguration
         OptionName: InstanceType
         Value: !Ref 'InstanceType'
@@ -93,20 +94,44 @@ Resources:
           OptionName: Subnets
           Value: !Ref 'SubnetId'
         - !Ref "AWS::NoValue"
-  DDBTable:
+
+  EC2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: 
+                  - ec2.amazonaws.com
+              Action:
+                - 'sts:AssumeRole'
+        Policies:
+        - PolicyName: EmbeddedInlinePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - '3:GetObject'
+                  - 'ec2:ModifyInstanceCreditSpecification'
+                  - 'elasticbeanstalk:PutInstanceStatistics'
+                  - 'dynamodb:*'
+                Resource: '*'
+
+  EC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Path: /
+      Roles: 
+       - !Ref EC2InstanceRole
+
+  DDBTableProducts:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: "W10Group1Products"
       AttributeDefinitions:
-        # -
-        #   AttributeName: "ProdPrice"
-        #   AttributeType: "N"
-        # -
-        #   AttributeName: "ProdStock"
-        #   AttributeType: "N"
-        # -
-        #   AttributeName: "ProdID"
-        #   AttributeType: "S"
         -
           AttributeName: "ProdCat"
           AttributeType: "S"
@@ -119,6 +144,28 @@ Resources:
           KeyType: "HASH"
         -
           AttributeName: "ProdName"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  DDBTableUsersOrders:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "W10Group1UsersOrders"
+      AttributeDefinitions:
+        -
+          AttributeName: "PrimaryAccountID"
+          AttributeType: "S"
+        -
+          AttributeName: "SortAccountID"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "PrimaryAccountID"
+          KeyType: "HASH"
+        -
+          AttributeName: "SortAccountID"
           KeyType: "RANGE"
       ProvisionedThroughput:
         ReadCapacityUnits: 1
