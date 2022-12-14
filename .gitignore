@@ -32,3 +32,9 @@ venv/
 # Python cache
 *__pycache__
 
+build/
+dist/
+
+W10Group1Webstore.egg-info/
+
+.eggs/
