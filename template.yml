@@ -131,7 +131,7 @@ Resources:
   DDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: "W10Group1Product"
+      TableName: "W10Group1Products"
       AttributeDefinitions:
         -
           AttributeName: "ProdCat"
@@ -150,10 +150,10 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
 
-  DDBTableProducts:
+  DDBTableProduct:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: "W10Group1Products"
+      TableName: "W10Group1Product"
       AttributeDefinitions:
         -
           AttributeName: "ProdCat"
