@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}
+  Market Page
+{% endblock %}
+
+{% block content %}
+      <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <!-- Your Columns HERE -->
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for item in items %}
+                <tr>
+                    <td>{{ item['ProdID'] }}</td>
+                    <td>{{ item['ProdName'] }}</td>
+                    <td>{{ item['ProdPrice'] }} €</td>
+                    <td>{{ item['ProdStock'] }}</td>
+                    <td>
+                        <button class="btn btn-outline btn-info">More Info</button>
+                        <button class="btn btn-outline btn-success">Purchase this Item</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+
+<!-- {
+    "Items": [
+    {
+    "AccountID": "5432",
+    "Email": "milla.mallikas@jokuemail.com",
+    "SortKey": "5432",
+    "Name": "Milla Mallikas"
+    },
+    {
+    "AccountID": "5432",
+    "SortKey": "Order#1002",
+    "OrderID": "1002"
+    },
+    {
+    "AccountID": "1234",
+    "Email": "tauno.tietokanta@example.com",
+    "SortKey": "1234",
+    "Name": "Tauno Tietokanta"
+    },
+    {
+    "AccountID": "1234",
+    "SortKey": "Order#1001",
+    "OrderID": "1001",
+    "ItemID": "10001"
+    }
+    ],
+    "Count": 4,
+    "ScannedCount": 4,
+    "ResponseMetadata": {
+    "HTTPHeaders": {
+    "date": "Wed, 14 Dec 2022 09:10:17 GMT",
+    "server": "Server",
+    "content-length": "471",
+    "x-amzn-requestid": "7VUAQNHC323LHR43BBIMOFCOAJVV4KQNSO5AEMVJF66Q9ASUAAJG",
+    "content-type": "application/x-amz-json-1.0",
+    "connection": "keep-alive",
+    "x-amz-crc32": "1824570851"
+    },
+    "RequestId": "7VUAQNHC323LHR43BBIMOFCOAJVV4KQNSO5AEMVJF66Q9ASUAAJG",
+    "HTTPStatusCode": 200,
+    "RetryAttempts": 0
+    }
+    } -->
