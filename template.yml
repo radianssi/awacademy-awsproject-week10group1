@@ -93,3 +93,33 @@ Resources:
           OptionName: Subnets
           Value: !Ref 'SubnetId'
         - !Ref "AWS::NoValue"
+  DDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "W10Group1Products"
+      AttributeDefinitions:
+        -
+          AttributeName: "ProdPrice"
+          AttributeType: "N"
+        -
+          AttributeName: "ProdStock"
+          AttributeType: "N"
+        -
+          AttributeName: "ProdID"
+          AttributeType: "S"
+        -
+          AttributeName: "ProdCat"
+          AttributeType: "S"
+        -
+          AttributeName: "ProdName"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "ProdCat"
+          KeyType: "HASH"
+        -
+          AttributeName: "ProdName"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
