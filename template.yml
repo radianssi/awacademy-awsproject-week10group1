@@ -77,8 +77,8 @@ Resources:
       OptionSettings:
       - Namespace: aws:autoscaling:launchconfiguration
         OptionName: IamInstanceProfile
-        Value: !Ref EC2InstanceProfile
-        # Value: !Ref 'EBInstanceProfile'
+        #Value: !Ref EC2InstanceProfile
+        Value: !Ref 'EBInstanceProfile'
       - Namespace: aws:autoscaling:launchconfiguration
         OptionName: InstanceType
         Value: !Ref 'InstanceType'
