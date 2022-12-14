@@ -17,7 +17,7 @@ application = Flask(__name__)
 #         return f'Item {self.name}'
 
 def get_products_from_dynamodb():
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
     table = dynamodb.Table('w10group1products-test')
     data = table.scan()
     items = data['Items']
