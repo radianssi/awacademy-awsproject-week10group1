@@ -115,6 +115,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - '3:GetObject'
+                  - '3:PutObject'
                   - 'ec2:ModifyInstanceCreditSpecification'
                   - 'elasticbeanstalk:PutInstanceStatistics'
                   - 'dynamodb:*'
@@ -128,6 +129,28 @@ Resources:
        - !Ref EC2InstanceRole
 
   DDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "W10Group1Product"
+      AttributeDefinitions:
+        -
+          AttributeName: "ProdCat"
+          AttributeType: "S"
+        -
+          AttributeName: "ProdName"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "ProdCat"
+          KeyType: "HASH"
+        -
+          AttributeName: "ProdName"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  DDBTableProducts:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: "W10Group1Products"
