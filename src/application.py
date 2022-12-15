@@ -51,7 +51,8 @@ def market_page():
 @application.route('/market/purchase/<ProdCat>/<ProdName>')
 def purchase_page(ProdCat,ProdName):
     data = subtract_products_from_dynamodb(ProdCat,ProdName)
-    return f"Thank you for your purchase of {ProdName}, items remaining in stock = {data}"
+    return render_template('purchase.html', data=data, ProdName = ProdName)
+    #return f"Thank you for your purchase of {ProdName}, items remaining in stock = {data}"
 
 
 if __name__ == '__main__':

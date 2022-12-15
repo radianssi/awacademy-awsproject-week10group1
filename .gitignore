@@ -38,3 +38,5 @@ dist/
 W10Group1Webstore.egg-info/
 
 .eggs/
+
+architecture*
