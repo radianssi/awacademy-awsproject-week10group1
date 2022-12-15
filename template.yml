@@ -95,60 +95,60 @@ Resources:
           Value: !Ref 'SubnetId'
         - !Ref "AWS::NoValue"
 
-  EC2InstanceRole:
-    Type: AWS::IAM::Role
-    Properties:
-        AssumeRolePolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service: 
-                  - ec2.amazonaws.com
-              Action:
-                - 'sts:AssumeRole'
-        Policies:
-        - PolicyName: EmbeddedInlinePolicy
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - '3:GetObject'
-                  - '3:PutObject'
-                  - 'ec2:ModifyInstanceCreditSpecification'
-                  - 'elasticbeanstalk:PutInstanceStatistics'
-                  - 'dynamodb:*'
-                Resource: '*'
+  # EC2InstanceRole:
+  #   Type: AWS::IAM::Role
+  #   Properties:
+  #       AssumeRolePolicyDocument:
+  #         Version: "2012-10-17"
+  #         Statement:
+  #           - Effect: Allow
+  #             Principal:
+  #               Service: 
+  #                 - ec2.amazonaws.com
+  #             Action:
+  #               - 'sts:AssumeRole'
+  #       Policies:
+  #       - PolicyName: EmbeddedInlinePolicy
+  #         PolicyDocument:
+  #           Version: "2012-10-17"
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - '3:GetObject'
+  #                 - '3:PutObject'
+  #                 - 'ec2:ModifyInstanceCreditSpecification'
+  #                 - 'elasticbeanstalk:PutInstanceStatistics'
+  #                 - 'dynamodb:*'
+  #               Resource: '*'
 
-  EC2InstanceProfile:
-    Type: AWS::IAM::InstanceProfile
-    Properties: 
-      Path: /
-      Roles: 
-       - !Ref EC2InstanceRole
+  # EC2InstanceProfile:
+  #   Type: AWS::IAM::InstanceProfile
+  #   Properties: 
+  #     Path: /
+  #     Roles: 
+  #      - !Ref EC2InstanceRole
 
-  DDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: "W10Group1Products"
-      AttributeDefinitions:
-        -
-          AttributeName: "ProdCat"
-          AttributeType: "S"
-        -
-          AttributeName: "ProdName"
-          AttributeType: "S"
-      KeySchema:
-        -
-          AttributeName: "ProdCat"
-          KeyType: "HASH"
-        -
-          AttributeName: "ProdName"
-          KeyType: "RANGE"
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
+  # DDBTable:
+  #   Type: AWS::DynamoDB::Table
+  #   Properties:
+  #     TableName: "W10Group1Products"
+  #     AttributeDefinitions:
+  #       -
+  #         AttributeName: "ProdCat"
+  #         AttributeType: "S"
+  #       -
+  #         AttributeName: "ProdName"
+  #         AttributeType: "S"
+  #     KeySchema:
+  #       -
+  #         AttributeName: "ProdCat"
+  #         KeyType: "HASH"
+  #       -
+  #         AttributeName: "ProdName"
+  #         KeyType: "RANGE"
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
 
   DDBTableProduct:
     Type: AWS::DynamoDB::Table
