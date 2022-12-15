@@ -7,26 +7,17 @@ from boto3.dynamodb.conditions import Key
 
 application = Flask(__name__)
 
-# class Item(db.Model):
-#     id = db.Column(db.Integer(), primary_key=True)
-#     name = db.Column(db.String(length=30), nullable=False, unique=True)
-#     price = db.Column(db.Integer(), nullable=False)
-#     barcode = db.Column(db.String(length=12), nullable=False, unique=True)
-#     description = db.Column(db.String(length=1024), nullable=False, unique=True)
-
-#     def __repr__(self):
-#         return f'Item {self.name}'
 
 def get_products_from_dynamodb():
     dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
-    table = dynamodb.Table('w10group1products-test')
+    table = dynamodb.Table('W10Group1Product')
     data = table.scan()
     items = data['Items']
     return items
 
 def subtract_products_from_dynamodb(ProdCat,ProdName):
     dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
-    table = dynamodb.Table('w10group1products-test')
+    table = dynamodb.Table('W10Group1Product')
     product_info = table.query(KeyConditionExpression=Key('ProdCat').eq(ProdCat) & Key('ProdName').eq(ProdName))
     data = product_info['Items']
     newstock = int(data[0]['ProdStock'])-1
@@ -52,7 +43,6 @@ def market_page():
 def purchase_page(ProdCat,ProdName):
     data = subtract_products_from_dynamodb(ProdCat,ProdName)
     return render_template('purchase.html', data=data, ProdName = ProdName)
-    #return f"Thank you for your purchase of {ProdName}, items remaining in stock = {data}"
 
 
 if __name__ == '__main__':
