@@ -3,6 +3,7 @@ import json
 from flask import Flask, Response, render_template
 import optparse
 import boto3
+from boto3.dynamodb.conditions import Key
 
 application = Flask(__name__)
 
@@ -23,6 +24,19 @@ def get_products_from_dynamodb():
     items = data['Items']
     return items
 
+def subtract_products_from_dynamodb(ProdCat,ProdName):
+    dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
+    table = dynamodb.Table('w10group1products-test')
+    product_info = table.query(KeyConditionExpression=Key('ProdCat').eq(ProdCat) & Key('ProdName').eq(ProdName))
+    data = product_info['Items']
+    newstock = int(data[0]['ProdStock'])-1
+    table.update_item(
+        Key={'ProdCat': ProdCat,'ProdName': ProdName},
+        UpdateExpression="SET ProdStock= :s",
+        ExpressionAttributeValues={':s':newstock},
+    )
+    return str(newstock)
+
 
 @application.route('/')
 @application.route('/home')
@@ -33,6 +47,11 @@ def home_page():
 def market_page():
     items = get_products_from_dynamodb()
     return render_template('market.html', items=items)
+
+@application.route('/market/purchase/<ProdCat>/<ProdName>')
+def purchase_page(ProdCat,ProdName):
+    data = subtract_products_from_dynamodb(ProdCat,ProdName)
+    return f"Thank you for your purchase of {ProdName}, items remaining in stock = {data}"
 
 
 if __name__ == '__main__':
