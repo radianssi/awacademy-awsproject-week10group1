@@ -128,28 +128,6 @@ Resources:
   #     Roles: 
   #      - !Ref EC2InstanceRole
 
-  # DDBTable:
-  #   Type: AWS::DynamoDB::Table
-  #   Properties:
-  #     TableName: "W10Group1Products"
-  #     AttributeDefinitions:
-  #       -
-  #         AttributeName: "ProdCat"
-  #         AttributeType: "S"
-  #       -
-  #         AttributeName: "ProdName"
-  #         AttributeType: "S"
-  #     KeySchema:
-  #       -
-  #         AttributeName: "ProdCat"
-  #         KeyType: "HASH"
-  #       -
-  #         AttributeName: "ProdName"
-  #         KeyType: "RANGE"
-  #     ProvisionedThroughput:
-  #       ReadCapacityUnits: 1
-  #       WriteCapacityUnits: 1
-
   DDBTableProduct:
     Type: AWS::DynamoDB::Table
     Properties:
