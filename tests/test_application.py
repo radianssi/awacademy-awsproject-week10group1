@@ -7,8 +7,11 @@ from src.application import application
 def client():
     return application.test_client()
 
-def test_request_example(client):
+def test_request_home_page(client):
     response = client.get('/home')
     assert response.status_code == 200
-    assert b"This is our content for the Home Page" in response.data
+    assert b"Welcome to Our Shop" in response.data
 
+def test_request_market_page(client):
+    response = client.get('/market')
+    assert response.status_code == 200
