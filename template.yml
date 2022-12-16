@@ -116,24 +116,24 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
 
-  DDBTableUsersOrders:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: "W10Group1UsersOrders"
-      AttributeDefinitions:
-        -
-          AttributeName: "PrimaryAccountID"
-          AttributeType: "S"
-        -
-          AttributeName: "SortKey"
-          AttributeType: "S"
-      KeySchema:
-        -
-          AttributeName: "PrimaryAccountID"
-          KeyType: "HASH"
-        -
-          AttributeName: "SortKey"
-          KeyType: "RANGE"
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
+  # DDBTableUsersOrders:
+  #   Type: AWS::DynamoDB::Table
+  #   Properties:
+  #     TableName: "W10Group1UsersOrders"
+  #     AttributeDefinitions:
+  #       -
+  #         AttributeName: "PrimaryAccountID"
+  #         AttributeType: "S"
+  #       -
+  #         AttributeName: "SortAccountID"
+  #         AttributeType: "S"
+  #     KeySchema:
+  #       -
+  #         AttributeName: "PrimaryAccountID"
+  #         KeyType: "HASH"
+  #       -
+  #         AttributeName: "SortAccountID"
+  #         KeyType: "RANGE"
+  #     ProvisionedThroughput:
+  #       ReadCapacityUnits: 1
+  #       WriteCapacityUnits: 1
