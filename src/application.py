@@ -39,6 +39,7 @@ def add_order_to_to_dynamodb(ProdName):
         UpdateExpression="SET ProdName= :s",
         ExpressionAttributeValues={':s':ProdName},
     )
+    return OrderNumber
 
 @application.route('/')
 @application.route('/home')
@@ -53,8 +54,8 @@ def market_page():
 @application.route('/market/purchase/<ProdCat>/<ProdName>')
 def purchase_page(ProdCat,ProdName):
     data = subtract_products_from_dynamodb(ProdCat,ProdName)
-    add_order_to_to_dynamodb(ProdName)
-    return render_template('purchase.html', data=data, ProdName = ProdName)
+    OrderNumber = add_order_to_to_dynamodb(ProdName)
+    return render_template('purchase.html', data=data, ProdName = ProdName, OrderNumber = OrderNumber)
 
 
 if __name__ == '__main__':
