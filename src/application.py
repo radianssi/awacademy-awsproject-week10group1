@@ -4,6 +4,7 @@ from flask import Flask, Response, render_template
 import optparse
 import boto3
 from boto3.dynamodb.conditions import Key
+import uuid
 
 application = Flask(__name__)
 
@@ -28,6 +29,16 @@ def subtract_products_from_dynamodb(ProdCat,ProdName):
     )
     return str(newstock)
 
+def add_order_to_to_dynamodb(ProdName):
+    id = str(uuid.uuid4())
+    OrderNumber = str('ORD#' + id)
+    dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
+    table = dynamodb.Table('W10Group1UsersOrders')
+    table.update_item(
+        Key={'PrimaryAccountID': 'ACC#007','SortKey': OrderNumber},
+        UpdateExpression="SET ProdName= :s",
+        ExpressionAttributeValues={':s':ProdName},
+    )
 
 @application.route('/')
 @application.route('/home')
@@ -42,6 +53,7 @@ def market_page():
 @application.route('/market/purchase/<ProdCat>/<ProdName>')
 def purchase_page(ProdCat,ProdName):
     data = subtract_products_from_dynamodb(ProdCat,ProdName)
+    add_order_to_to_dynamodb(ProdName)
     return render_template('purchase.html', data=data, ProdName = ProdName)
 
 
