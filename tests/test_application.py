@@ -16,5 +16,3 @@ def test_request_market_page(client):
     response = client.get('/market')
     assert response.status_code == 200
 
-
-
